@@ -24,8 +24,8 @@ function SignUp() {
     const [isUsernameChecked, setIsUsernameChecked] = useState(false);
     const [usernameMessage, setUsernameMessage] = useState("");
 
-    const [isNickNameChecked, setIsNickNameChecked] = useState(false);
-    const [nickNameMessage, setNickNameMessage] = useState("");
+    const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+    const [nicknameMessage, setNicknameMessage] = useState("");
 
     const {
         register,
@@ -45,7 +45,7 @@ function SignUp() {
 
         try {
             // 백엔드에게 요청을 하고,
-            const response = await api.post("auth/check-username", {
+            const response = await api.post("/auth/check-username", {
                 username: username,
             });
             const { isAvailable, message } = response.data;
@@ -53,48 +53,43 @@ function SignUp() {
             if (isAvailable) {
                 // 가능하다라고 답변을 받으면 가능하다는 것을 화면에 출력
                 setIsUsernameChecked(true);
-                setUsernameMessage("사용 가능한 아이디 입니다.");
+                setUsernameMessage("사용 가능한 아이디입니다.");
                 clearErrors("username");
             } else {
-                // 불가능하다라고 답변을 받으면 불가능하다는것을 화면에 출력
+                // 불가능하다라고 답변을 받으면 불가능하다는 것을 화면에 출력
                 setIsUsernameChecked(false);
                 setError("username", { message: message });
             }
         } catch (e) {
             console.log(e);
-            setError("username", {
-                message: "중복 확인 중 우류가 발생되었습니다.",
-            });
+            setError("username", { message: "중복 확인 중 오류가 발생되었습니다." });
         }
     };
 
-    const handleCheckNickName = async () => {
-        const nickName = getValues("nickName");
-
-        if (!nickName) {
+    const handleCheckNickname = async () => {
+        const nickname = getValues("nickName");
+        if (!nickname) {
             setError("nickName", { message: "닉네임을 입력해주세요." });
             return;
         }
 
         try {
-            const response = await api.post("auth/check-nick", {
-                nickName: nickName,
+            const response = await api.post("/auth/check-nickname", {
+                nickname: nickname,
             });
             const { isAvailable, message } = response.data;
 
             if (isAvailable) {
-                setIsNickNameChecked(true);
-                setNickNameMessage(message);
+                setIsNicknameChecked(true);
+                setNicknameMessage(message);
                 clearErrors("nickName");
             } else {
-                setIsNickNameChecked(false);
+                setIsNicknameChecked(false);
                 setError("nickName", { message: message });
             }
         } catch (e) {
             console.log(e);
-            setError("nickName", {
-                message: "중복 확인 중 오류가 발생되었습니다.",
-            });
+            setError("nickName", { message: "중복 확인 중 오류가 발생되었습니다." });
         }
     };
 
@@ -103,39 +98,16 @@ function SignUp() {
             className={twMerge(
                 ["min-h-[calc(100dvh-var(--height-header))]"],
                 ["flex", "justify-center", "items-center"],
-            )}
-        >
+            )}>
             <div
                 className={twMerge(
                     ["w-full", "max-w-[500px]", "space-y-8", "p-8"],
-                    [
-                        "border",
-                        "border-divider",
-                        "rounded-xl",
-                        "shadow-lg",
-                        "bg-background-paper",
-                    ],
-                )}
-            >
+                    ["border", "border-divider", "rounded-xl", "shadow-lg", "bg-background-paper"],
+                )}>
                 {/* 로고 영역 */}
-                <div
-                    className={twMerge([
-                        "flex",
-                        "flex-col",
-                        "items-center",
-                        "gap-2",
-                    ])}
-                >
-                    <FaYoutube
-                        className={twMerge([
-                            "w-12",
-                            "h-12",
-                            "text-primary-main",
-                        ])}
-                    />
-                    <h1 className={twMerge(["text-2xl", "font-bold"])}>
-                        회원가입
-                    </h1>
+                <div className={twMerge(["flex", "flex-col", "items-center", "gap-2"])}>
+                    <FaYoutube className={twMerge(["w-12", "h-12", "text-primary-main"])} />
+                    <h1 className={twMerge(["text-2xl", "font-bold"])}>회원가입</h1>
                     <p className={twMerge(["text-sm", "text-text-disabled"])}>
                         WeTube와 함께하세요
                     </p>
@@ -148,8 +120,7 @@ function SignUp() {
                                 ["pb-2"],
                                 ["text-lg", "font-semibold"],
                                 ["border-b", "border-divider"],
-                            )}
-                        >
+                            )}>
                             계정 정보
                         </h3>
                         <div className={twMerge(["flex", "gap-2"])}>
@@ -158,15 +129,12 @@ function SignUp() {
                                 placeholder={"아이디를 입력해주세요"}
                                 registration={register("username", {
                                     required: "아이디는 필수입니다.",
-                                    minLength: {
-                                        value: 4,
-                                        message: "4자 이상 입력해주세요.",
-                                        onChange: () => {
-                                            // 중복확인을 해서 통과했을 때 사용자가 또 ID를 바꾼다면
-                                            // 허가 사항을 취소할 필요가 있음
-                                            setIsUsernameChecked(false);
-                                            setUsernameMessage("");
-                                        },
+                                    minLength: { value: 4, message: "4자 이상 입력해주세요." },
+                                    onChange: () => {
+                                        // 중복확인을 해서 통과했을 때 사용자가 또 ID를 바꾼다면
+                                        // 허가 사항을 취소할 필요가 있음
+                                        setIsUsernameChecked(false);
+                                        setUsernameMessage("");
                                     },
                                 })}
                                 error={errors.username?.message}
@@ -175,19 +143,12 @@ function SignUp() {
                                 type={"button"}
                                 variant={"secondary"}
                                 onClick={handleCheckUsername}
-                                className={twMerge(["w-32", "mt-6", "text-sm"])}
-                            >
+                                className={twMerge(["w-32", "mt-6", "text-sm"])}>
                                 중복확인
                             </Button>
                         </div>
                         {isUsernameChecked && (
-                            <p
-                                className={twMerge([
-                                    "text-success-main",
-                                    "text-xs",
-                                    "mt-[-10px]",
-                                ])}
-                            >
+                            <p className={twMerge(["text-success-main", "text-xs", "mt-[-10px]"])}>
                                 {usernameMessage}
                             </p>
                         )}
@@ -198,10 +159,7 @@ function SignUp() {
                             placeholder={"8자 이상 입력"}
                             registration={register("password", {
                                 required: "비밀번호는 필수입니다.",
-                                minLength: {
-                                    value: 8,
-                                    message: "8자 이상이어야 합니다.",
-                                },
+                                minLength: { value: 8, message: "8자 이상이어야 합니다." },
                             })}
                             error={errors.password?.message}
                         />
@@ -212,68 +170,49 @@ function SignUp() {
                             placeholder={"example@wetube.com"}
                             error={errors.email?.message}
                             registration={register("email", {
-                                required: "이메일은 필수 입니다.",
+                                required: "이메일은 필수입니다.",
                                 pattern: {
                                     value: /^\S+@\S+$/i,
                                     message: "이메일 형식이 아닙니다.",
                                 },
                             })}
                         />
+
                         <div className={twMerge(["flex", "gap-2"])}>
                             <Input
                                 label={"닉네임"}
                                 placeholder={"활동명을 입력해주세요"}
                                 registration={register("nickName", {
                                     required: "닉네임은 필수입니다.",
-                                    // 사용자가 닉네임을 수정하면 다시 검사받게 초기화!
-                                    onChange: () => {
-                                        setIsNickNameChecked(false);
-                                        setNickNameMessage("");
-                                    },
                                 })}
                                 error={errors.nickName?.message}
                             />
                             <Button
                                 type={"button"}
                                 variant={"secondary"}
-                                onClick={handleCheckNickName}
-                                className={twMerge(["w-32", "mt-6", "text-sm"])}
-                            >
+                                onClick={handleCheckNickname}
+                                className={twMerge(["w-32", "mt-6", "text-sm"])}>
                                 중복확인
                             </Button>
                         </div>
-
-                        {/* 결과 메시지 보여주는 부분 */}
-                        {isNickNameChecked && (
-                            <p
-                                className={twMerge([
-                                    "text-success-main",
-                                    "text-xs",
-                                    "mt-[-10px]",
-                                ])}
-                            >
-                                {nickNameMessage}
+                        {isNicknameChecked && (
+                            <p className={twMerge(["text-success-main", "text-xs", "mt-[-10px]"])}>
+                                {nicknameMessage}
                             </p>
                         )}
                     </div>
 
+                    {/* 개인정보 */}
                     <div className={"space-y-4"}>
                         <h3
                             className={twMerge(
                                 ["pb-2"],
                                 ["text-lg", "font-semibold"],
                                 ["border-b", "border-divider"],
-                            )}
-                        >
+                            )}>
                             개인 정보
                         </h3>
-                        <div
-                            className={twMerge([
-                                "flex",
-                                "justify-between",
-                                "gap-4",
-                            ])}
-                        >
+                        <div className={twMerge(["flex", "justify-between", "gap-4"])}>
                             <Input
                                 type={"date"}
                                 label={"생년월일"}
@@ -282,22 +221,8 @@ function SignUp() {
                                 })}
                                 error={errors.birthDate?.message}
                             />
-                            <div
-                                className={twMerge([
-                                    "flex",
-                                    "flex-col",
-                                    "gap-1",
-                                    "w-full",
-                                ])}
-                            >
-                                <label
-                                    className={twMerge([
-                                        "text-sm",
-                                        "font=medium",
-                                    ])}
-                                >
-                                    성별
-                                </label>
+                            <div className={twMerge(["flex", "flex-col", "gap-1", "w-full"])}>
+                                <label className={twMerge(["text-sm", "font-medium"])}>성별</label>
                                 <select
                                     className={twMerge(
                                         ["w-full", "px-3", "py-2"],
@@ -312,13 +237,9 @@ function SignUp() {
                                             "rounded-md",
                                             "bg-background-default",
                                         ],
-                                        [
-                                            "focus:outline-none",
-                                            "focus:border-secondary-main",
-                                        ],
+                                        ["focus:outline-none", "focus:border-secondary-main"],
                                     )}
-                                    {...register("gender", { required: true })}
-                                >
+                                    {...register("gender", { required: true })}>
                                     <option value={"MALE"}>남성</option>
                                     <option value={"FEMALE"}>여성</option>
                                 </select>
@@ -329,20 +250,20 @@ function SignUp() {
                             label={"휴대폰 번호"}
                             placeholder={"000-0000-0000"}
                             registration={register("phoneNumber", {
-                                required: "전화번호는 필수입니다",
+                                required: "전화번호는 필수입니다.",
                             })}
                             error={errors.phoneNumber?.message}
                         />
                     </div>
-                    {/*주소정보*/}
+
+                    {/* 주소 정보 */}
                     <div className={"space-y-4"}>
                         <h3
                             className={twMerge(
                                 ["pb-2"],
                                 ["text-lg", "font-semibold"],
                                 ["border-b", "border-divider"],
-                            )}
-                        >
+                            )}>
                             주소
                         </h3>
                         <div className={twMerge(["flex", "gap-2"])}>
@@ -357,8 +278,7 @@ function SignUp() {
                             <Button
                                 type={"button"}
                                 variant={"secondary"}
-                                className={twMerge(["w-32", "mt-6", "text-sm"])}
-                            >
+                                className={twMerge(["w-32", "text-sm"])}>
                                 주소찾기
                             </Button>
                         </div>
@@ -367,43 +287,24 @@ function SignUp() {
                             placeholder={"기본 주소"}
                             readOnly
                             error={errors.address1?.message}
-                            registration={register("address1", {
-                                required: "필수",
-                            })}
+                            registration={register("address1", { required: "필수" })}
                         />
+
                         <Input
-                            placeholder={"상세주소 (선택)"}
+                            placeholder={"상세 주소 (선택)"}
                             registration={register("address2")}
                         />
                     </div>
-                    <Button
-                        size={"lg"}
-                        className={"w-full"}
-                        // 중복확인 둘 다 안 하면 버튼 못 누르게!
-                        disabled={
-                            isSubmitting ||
-                            !isUsernameChecked ||
-                            !isNickNameChecked
-                        }
-                    >
+
+                    <Button size={"lg"} className={"w-full"} disabled={isSubmitting}>
                         {isSubmitting ? "가입 중..." : "회원가입"}
                     </Button>
 
-                    <p
-                        className={twMerge([
-                            "text-center",
-                            "text-sm",
-                            "text-text-disabled",
-                        ])}
-                    >
+                    <p className={twMerge(["text-center", "text-sm", "text-text-disabled"])}>
                         이미 계정이 있으신가요?{" "}
                         <Link
                             to={"/sign-in"}
-                            className={twMerge([
-                                "text-secondary-main",
-                                "hover:underline",
-                            ])}
-                        >
+                            className={twMerge(["text-secondary-main", "hover:underline"])}>
                             로그인하기
                         </Link>
                     </p>
