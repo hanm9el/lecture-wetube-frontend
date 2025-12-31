@@ -32,7 +32,7 @@ function Header() {
     // 우리가 써야 하는건, React의 MouseEvent 타입이라 이를 명시적으로 수동으로 적어줘야 함
     const handleUploadClick = (event: MouseEvent<HTMLAnchorElement>) => {
         // 비회원이 누르면, 모달을 띄우고 끝내는 함수
-        if (isLoggedIn) {
+        if (!isLoggedIn) {
             // a 태그에 onClick을 사용하고 있기 때문에 a의 기본 기능인 "이동"을 막을 필요가 있음
             // 이벤트 버블링 : 클릭 이벤트 등의 이벤트가 상위 요소로 전파되는 현상
             event.preventDefault();
@@ -160,7 +160,7 @@ function Header() {
                     </button>
                     <Link
                         onClick={handleUploadClick}
-                        to={"/upload"}
+                        to={"/videos/upload"}
                         className={twMerge(
                             ["flex", "items-center", "justify-center", "p-2"],
                             ["rounded-full", "hover:bg-text-default/10"],
@@ -262,7 +262,7 @@ function Header() {
                                             <Link
                                                 to={"/profile/edit"}
                                                 onClick={() =>
-                                                    setisMenuOpen(false)
+                                                    setIsMenuOpen(false)
                                                 }
                                                 className={twMerge(
                                                     [
@@ -289,7 +289,7 @@ function Header() {
                                             <Link
                                                 to={`/channel/${user.id}`}
                                                 onClick={() =>
-                                                    setisMenuOpen(false)
+                                                    setIsMenuOpen(false)
                                                 }
                                                 className={twMerge(
                                                     [
@@ -316,7 +316,7 @@ function Header() {
                                             <Link
                                                 to={"/inquiries"}
                                                 onClick={() =>
-                                                    setisMenuOpen(false)
+                                                    setIsMenuOpen(false)
                                                 }
                                                 className={twMerge(
                                                     [
@@ -365,13 +365,13 @@ function Header() {
                                                     "hover:bg-error-main/5",
                                                 ],
                                             )}
+                                            onClick={handleLogout}
                                         >
                                             <MdLogout
                                                 className={twMerge([
                                                     "w-5",
                                                     "h-5",
                                                 ])}
-                                                onClick={handleLogout}
                                             />
                                             로그아웃
                                         </button>
