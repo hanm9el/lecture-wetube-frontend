@@ -19,6 +19,7 @@ import { useThemeStore } from "../store/useThemeStore.ts";
 import { useModalStore } from "../store/useModalStore.ts";
 import { useAuthStore } from "../store/useAuthStore.ts";
 import Backdrop from "./ui/Backdrop.tsx";
+import Avatar from "./ui/Avatar.tsx";
 
 function Header() {
     const navigate = useNavigate();
@@ -51,76 +52,38 @@ function Header() {
             <header
                 className={twMerge(
                     ["fixed", "top-0", "left-0", "right-0", "h-header", "px-4"],
-                    ["border-b", "border-divider"],
+                    ["border-b", "border-divider", "bg-background-paper"],
                     ["flex", "justify-between", "items-center"],
                     ["z-50"],
                 )}
             >
                 {/* 1. 왼쪽 */}
                 <div className={twMerge(["flex", "items-center", "gap-4"])}>
-                    <button
-                        className={twMerge([
-                            "p-2",
-                            "rounded-full",
-                            "hover:bg-text-default/10",
-                        ])}
-                    >
+                    <button className={twMerge(["p-2", "rounded-full", "hover:bg-text-default/10"])}>
                         <MdMenu className={twMerge(["w-6", "h-6"])} />
                     </button>
-                    <Link
-                        to={"/"}
-                        className={twMerge(["flex", "items-center", "gap-2"])}
-                    >
-                        <FaYoutube
-                            className={twMerge([
-                                "w-8",
-                                "h-8",
-                                "text-primary-main",
-                            ])}
-                        />
-                        <span className={twMerge(["text-xl", "font-bold"])}>
-                            WeTube
-                        </span>
+                    <Link to={"/"} className={twMerge(["flex", "items-center", "gap-2"])}>
+                        <FaYoutube className={twMerge(["w-8", "h-8", "text-primary-main"])} />
+                        <span className={twMerge(["text-xl", "font-bold"])}>WeTube</span>
                     </Link>
                 </div>
 
                 {/* 2. 중간 */}
-                <div
-                    className={twMerge(
-                        ["flex-1", "max-w-[600px]"],
-                        ["flex", "items-center"],
-                    )}
-                >
+                <div className={twMerge(["flex-1", "max-w-[600px]"], ["hidden","md:flex", "items-center"])}>
                     <div className={twMerge(["flex", "w-full"])}>
                         <input
                             placeholder={"검색"}
                             className={twMerge(
                                 ["w-full", "px-4", "py-2"],
-                                [
-                                    "text-text-default",
-                                    "placeholder:text-text-disabled",
-                                ],
-                                [
-                                    "border",
-                                    "border-divider",
-                                    "rounded-l-full",
-                                    "shadow-inner",
-                                ],
-                                [
-                                    "focus:outline-none",
-                                    "focus:border-secondary-main",
-                                ],
+                                ["text-text-default", "placeholder:text-text-disabled"],
+                                ["border", "border-divider", "rounded-l-full", "shadow-inner"],
+                                ["focus:outline-none", "focus:border-secondary-main"],
                             )}
                         />
                         <button
                             className={twMerge(
                                 ["px-4", "py-2"],
-                                [
-                                    "border",
-                                    "border-l-0",
-                                    "rounded-r-full",
-                                    "border-divider",
-                                ],
+                                ["border", "border-l-0", "rounded-r-full", "border-divider"],
                             )}
                         >
                             <MdSearch className={twMerge(["w-6", "h-6"])} />
@@ -146,11 +109,7 @@ function Header() {
                             ["flex", "items-center", "justify-center", "p-2"],
                             ["rounded-full", "hover:bg-text-default/10"],
                         )}
-                        title={
-                            theme === "dark"
-                                ? "라이트 모드로 변경"
-                                : "다크 모드로 변경"
-                        }
+                        title={theme === "dark" ? "라이트 모드로 변경" : "다크 모드로 변경"}
                     >
                         {theme === "dark" ? (
                             <MdLightMode className={twMerge(["w-6", "h-6"])} />
@@ -173,64 +132,24 @@ function Header() {
                         <>
                             <button
                                 className={twMerge(
-                                    [
-                                        "flex",
-                                        "items-center",
-                                        "justify-center",
-                                        "p-2",
-                                    ],
-                                    [
-                                        "rounded-full",
-                                        "hover:bg-text-default/10",
-                                    ],
+                                    ["flex", "items-center", "justify-center", "p-2"],
+                                    ["rounded-full", "hover:bg-text-default/10"],
                                 )}
                             >
-                                <MdNotifications
-                                    className={twMerge(["w-6", "h-6"])}
-                                />
+                                <MdNotifications className={twMerge(["w-6", "h-6"])} />
                             </button>
                             <div className={"relative"}>
-                                <button
+                                <Avatar
+                                    size={"sm"}
+                                    nickname={user.nickname}
+                                    src={user.profileImage}
                                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                    className={twMerge(
-                                        [
-                                            "w-8",
-                                            "h-8",
-                                            "flex",
-                                            "justify-center",
-                                            "items-center",
-                                        ],
-                                        [
-                                            "rounded-full",
-                                            "bg-primary-main",
-                                            "text-sm",
-                                            "font-bold",
-                                        ],
-                                        [
-                                            "text-primary-contrastText",
-                                            "hover:opacity-90",
-                                            "focus:outline-none",
-                                        ],
-                                    )}
-                                >
-                                    {user?.nickname[0].toUpperCase()}
-                                </button>
+                                />
                                 {isMenuOpen && (
                                     <div
                                         className={twMerge(
-                                            [
-                                                "absolute",
-                                                "right-0",
-                                                "top-full",
-                                                "mt-2",
-                                                "w-60",
-                                            ],
-                                            [
-                                                "bg-background-paper",
-                                                "border",
-                                                "border-divider",
-                                                "rounded-xl",
-                                            ],
+                                            ["absolute", "right-0", "top-full", "mt-2", "w-60"],
+                                            ["bg-background-paper", "border", "border-divider", "rounded-xl"],
                                             ["shadow-lg", "overflow-hidden"],
                                         )}
                                     >
@@ -242,137 +161,55 @@ function Header() {
                                                 "border-divider",
                                             ])}
                                         >
-                                            <p
-                                                className={twMerge([
-                                                    "font-semibold",
-                                                ])}
-                                            >
-                                                {user.nickname}
-                                            </p>
-                                            <p
-                                                className={twMerge([
-                                                    "text-xs",
-                                                    "text-text-disabled",
-                                                ])}
-                                            >
+                                            <p className={twMerge(["font-semibold"])}>{user.nickname}</p>
+                                            <p className={twMerge(["text-xs", "text-text-disabled"])}>
                                                 {user.email}
                                             </p>
                                         </div>
                                         <div className={"py-2"}>
                                             <Link
                                                 to={"/profile/edit"}
-                                                onClick={() =>
-                                                    setIsMenuOpen(false)
-                                                }
+                                                onClick={() => setIsMenuOpen(false)}
                                                 className={twMerge(
-                                                    [
-                                                        "flex",
-                                                        "items-center",
-                                                        "gap-3",
-                                                        "px-4",
-                                                        "py-2",
-                                                    ],
-                                                    [
-                                                        "text-sm",
-                                                        "hover:bg-text-default/10",
-                                                    ],
+                                                    ["flex", "items-center", "gap-3", "px-4", "py-2"],
+                                                    ["text-sm", "hover:bg-text-default/10"],
                                                 )}
                                             >
-                                                <MdEdit
-                                                    className={twMerge([
-                                                        "w-5",
-                                                        "h-5",
-                                                    ])}
-                                                />
+                                                <MdEdit className={twMerge(["w-5", "h-5"])} />
                                                 프로필 수정
                                             </Link>
                                             <Link
                                                 to={`/channel/${user.id}`}
-                                                onClick={() =>
-                                                    setIsMenuOpen(false)
-                                                }
+                                                onClick={() => setIsMenuOpen(false)}
                                                 className={twMerge(
-                                                    [
-                                                        "flex",
-                                                        "items-center",
-                                                        "gap-3",
-                                                        "px-4",
-                                                        "py-2",
-                                                    ],
-                                                    [
-                                                        "text-sm",
-                                                        "hover:bg-text-default/10",
-                                                    ],
+                                                    ["flex", "items-center", "gap-3", "px-4", "py-2"],
+                                                    ["text-sm", "hover:bg-text-default/10"],
                                                 )}
                                             >
-                                                <MdAccountBox
-                                                    className={twMerge([
-                                                        "w-5",
-                                                        "h-5",
-                                                    ])}
-                                                />
-                                                내 채널
+                                                <MdAccountBox className={twMerge(["w-5", "h-5"])} />내 채널
                                             </Link>
                                             <Link
                                                 to={"/inquiries"}
-                                                onClick={() =>
-                                                    setIsMenuOpen(false)
-                                                }
+                                                onClick={() => setIsMenuOpen(false)}
                                                 className={twMerge(
-                                                    [
-                                                        "flex",
-                                                        "items-center",
-                                                        "gap-3",
-                                                        "px-4",
-                                                        "py-2",
-                                                    ],
-                                                    [
-                                                        "text-sm",
-                                                        "hover:bg-text-default/10",
-                                                    ],
+                                                    ["flex", "items-center", "gap-3", "px-4", "py-2"],
+                                                    ["text-sm", "hover:bg-text-default/10"],
                                                 )}
                                             >
-                                                <MdSupportAgent
-                                                    className={twMerge([
-                                                        "w-5",
-                                                        "h-5",
-                                                    ])}
-                                                />
+                                                <MdSupportAgent className={twMerge(["w-5", "h-5"])} />
                                                 고객센터 (1:1문의)
                                             </Link>
                                         </div>
-                                        <div
-                                            className={twMerge([
-                                                "border-t",
-                                                "border-divider",
-                                                "my-1",
-                                            ])}
-                                        />
+                                        <div className={twMerge(["border-t", "border-divider", "my-1"])} />
 
                                         <button
                                             className={twMerge(
-                                                [
-                                                    "w-full",
-                                                    "flex",
-                                                    "items-center",
-                                                    "gap-3",
-                                                    "px-4",
-                                                    "py-2",
-                                                ],
-                                                [
-                                                    "text-sm",
-                                                    "text-error-main",
-                                                    "hover:bg-error-main/5",
-                                                ],
+                                                ["w-full", "flex", "items-center", "gap-3", "px-4", "py-2"],
+                                                ["text-sm", "text-error-main", "hover:bg-error-main/5"],
                                             )}
                                             onClick={handleLogout}
                                         >
-                                            <MdLogout
-                                                className={twMerge([
-                                                    "w-5",
-                                                    "h-5",
-                                                ])}
-                                            />
+                                            <MdLogout className={twMerge(["w-5", "h-5"])} />
                                             로그아웃
                                         </button>
                                     </div>
@@ -383,24 +220,12 @@ function Header() {
                         <Link
                             to={"/sign-in"}
                             className={twMerge(
-                                [
-                                    "flex",
-                                    "items-center",
-                                    "gap-2",
-                                    "px-4",
-                                    "py-2",
-                                ],
+                                ["flex", "items-center", "gap-2", "px-4", "py-2"],
                                 ["border", "border-divider", "rounded-full"],
-                                [
-                                    "text-secondary-main",
-                                    "font-medium",
-                                    "hover:bg-secondary-main/10",
-                                ],
+                                ["text-secondary-main", "font-medium", "hover:bg-secondary-main/10"],
                             )}
                         >
-                            <FaRegUserCircle
-                                className={twMerge(["w-5", "h-5"])}
-                            />
+                            <FaRegUserCircle className={twMerge(["w-5", "h-5"])} />
                             <span className={twMerge("text-sm")}>로그인</span>
                         </Link>
                     )}
@@ -409,10 +234,7 @@ function Header() {
             {isMenuOpen && (
                 <Backdrop
                     onClose={() => setIsMenuOpen(false)}
-                    className={twMerge([
-                        "bg-transparent",
-                        "backdrop-blur-none",
-                    ])}
+                    className={twMerge(["bg-transparent", "backdrop-blur-none"])}
                 />
             )}
         </>
