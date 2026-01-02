@@ -168,7 +168,7 @@ function Header() {
                                         </div>
                                         <div className={"py-2"}>
                                             <Link
-                                                to={"/profile/edit"}
+                                                to={"/users/edit"}
                                                 onClick={() => setIsMenuOpen(false)}
                                                 className={twMerge(
                                                     ["flex", "items-center", "gap-3", "px-4", "py-2"],
