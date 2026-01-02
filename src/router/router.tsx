@@ -5,6 +5,7 @@ import SignIn from "../pages/(auth)/SignIn.tsx";
 import SignUp from "../pages/(auth)/SignUp.tsx";
 import VideoUpload from "../pages/videos/VideoUpload.tsx";
 import ProfileEdit from "../pages/users/ProfileEdit.tsx";
+import VideoDetail from "../pages/videos/VideoDetail.tsx";
 
 const router = createBrowserRouter([
     {
@@ -17,7 +18,10 @@ const router = createBrowserRouter([
             { path: "users", children: [{ path: "edit", element: <ProfileEdit /> }] },
             {
                 path: "videos",
-                children: [{ path: "upload", element: <VideoUpload /> }],
+                children: [
+                    { path: "upload", element: <VideoUpload /> },
+                    { path: ":id", element: <VideoDetail />},
+                ],
             },
         ],
     },
