@@ -86,7 +86,7 @@ function NoticeDetail() {
 
                     {user?.role === "ADMIN" && (
                         <div className={twMerge(["flex", "gap-2"])}>
-                            <Button variant={"info"} onClick={() => navigate(`/notices/$/{notice.id}/edit`)}>
+                            <Button variant={"info"} onClick={() => navigate(`/notices/${notice.id}/edit`)}>
                                 수정
                             </Button>
                             <Button variant={"error"} onClick={handleDelete}>
