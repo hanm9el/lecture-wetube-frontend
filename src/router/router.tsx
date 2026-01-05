@@ -6,6 +6,10 @@ import SignUp from "../pages/(auth)/SignUp.tsx";
 import VideoUpload from "../pages/videos/VideoUpload.tsx";
 import ProfileEdit from "../pages/users/ProfileEdit.tsx";
 import VideoDetail from "../pages/videos/VideoDetail.tsx";
+import NoticeList from "../pages/notices/NoticeList.tsx";
+import NoticeDetail from "../pages/notices/NoticeDetail.tsx";
+import NoticeCreate from "../pages/notices/NoticeCreate.tsx";
+import NoticeEdit from "../pages/notices/NoticeEdit.tsx";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +24,20 @@ const router = createBrowserRouter([
                 path: "videos",
                 children: [
                     { path: "upload", element: <VideoUpload /> },
-                    { path: ":id", element: <VideoDetail />},
+                    { path: ":id", element: <VideoDetail /> },
+                ],
+            },
+            // 경로 : /notices       > NoticeList
+            //       /notices/create   > NoticeCreate
+            //       /notices/:id      > NoticeDetail
+            //       /notices/:id/edit   > NoticeEdit
+            {
+                path: "notices",
+                children: [
+                    { index: true, element: <NoticeList /> },
+                    { path: "create", element: <NoticeCreate /> },
+                    { path: ":id", element: <NoticeDetail /> },
+                    { path: ":id/edit", element: <NoticeEdit /> },
                 ],
             },
         ],
