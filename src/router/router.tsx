@@ -10,6 +10,10 @@ import NoticeList from "../pages/notices/NoticeList.tsx";
 import NoticeDetail from "../pages/notices/NoticeDetail.tsx";
 import NoticeCreate from "../pages/notices/NoticeCreate.tsx";
 import NoticeEdit from "../pages/notices/NoticeEdit.tsx";
+import InquiryList from "../pages/inquiries/InquiryList.tsx";
+import InquiryCreate from "../pages/inquiries/InquiryCreate.tsx";
+import InquiryDetail from "../pages/inquiries/InquiryDetail.tsx";
+import InquiryEdit from "../pages/inquiries/InquiryEdit.tsx";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +42,15 @@ const router = createBrowserRouter([
                     { path: "create", element: <NoticeCreate /> },
                     { path: ":id", element: <NoticeDetail /> },
                     { path: ":id/edit", element: <NoticeEdit /> },
+                ],
+            },
+            {
+                path: "inquiries", // 주소가 /inquiries 로 시작하면
+                children: [
+                    { index: true, element: <InquiryList /> }, // 그냥 /inquiries 면 목록 보여줌
+                    { path: "new", element: <InquiryCreate /> }, // /inquiries/create 면 글쓰기
+                    { path: ":id", element: <InquiryDetail /> }, // /inquiries/숫자 면 상세 보기
+                    { path: ":id/edit", element: <InquiryEdit />},
                 ],
             },
         ],
