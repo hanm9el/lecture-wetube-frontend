@@ -5,6 +5,7 @@ import { fetchNotices, type Notice } from "../../api/notice.ts";
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/ui/Button.tsx";
 import dayjs from "dayjs";
+import Pagination from "../../components/ui/Pagination.tsx";
 
 function NoticeList() {
     const navigate = useNavigate();
@@ -12,21 +13,30 @@ function NoticeList() {
 
     const [notices, setNotices] = useState<Notice[]>([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const LIMIT = 20;
 
     useEffect(() => {
-        loadNotices().then(() => {});
-    }, []);
+        loadNotices(currentPage).then(() => {});
+    }, [currentPage]);
 
-    const loadNotices = async () => {
+    const loadNotices = async (page: number) => {
         try {
-            const data = await fetchNotices();
+            const data = await fetchNotices(page, LIMIT);
             console.log(data);
             setNotices(data.notices);
+            setTotalPages(data.totalPages);
         } catch (e) {
             console.log(e);
         } finally {
             setLoading(false);
         }
+    };
+
+    const onPageChange = (page: number) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
     };
 
     return (
@@ -66,7 +76,7 @@ function NoticeList() {
                             key={notice.id}
                             className={twMerge(
                                 ["flex", "gap-4", "px-6", "py-3"],
-                                ["border-b", "border-divider","last:border-none"],
+                                ["border-b", "border-divider", "last:border-none"],
                                 ["text-sm", "font-medium", "text-text-disabled"],
                             )}
                         >
@@ -85,6 +95,7 @@ function NoticeList() {
                     ))
                 )}
             </div>
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
         </div>
     );
 }

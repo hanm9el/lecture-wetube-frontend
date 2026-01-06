@@ -14,6 +14,7 @@ import InquiryList from "../pages/inquiries/InquiryList.tsx";
 import InquiryCreate from "../pages/inquiries/InquiryCreate.tsx";
 import InquiryDetail from "../pages/inquiries/InquiryDetail.tsx";
 import InquiryEdit from "../pages/inquiries/InquiryEdit.tsx";
+import SearchResults from "../pages/results/SearchResults.tsx";
 
 const router = createBrowserRouter([
     {
@@ -50,9 +51,10 @@ const router = createBrowserRouter([
                     { index: true, element: <InquiryList /> }, // 그냥 /inquiries 면 목록 보여줌
                     { path: "new", element: <InquiryCreate /> }, // /inquiries/create 면 글쓰기
                     { path: ":id", element: <InquiryDetail /> }, // /inquiries/숫자 면 상세 보기
-                    { path: ":id/edit", element: <InquiryEdit />},
+                    { path: ":id/edit", element: <InquiryEdit /> },
                 ],
             },
+            { path: "results", element: <SearchResults /> },
         ],
     },
 ]);
