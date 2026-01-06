@@ -1,35 +1,44 @@
-import {api} from "./axios.ts";
+import { api } from "./axios.ts";
 
-export interface Video{
-    id:number;
-    createdAt:string;
+export interface Video {
+    id: number;
+    createdAt: string;
 
-    title:string;
-    description:string;
-    videoPath:string;
-    thumbnailPath:string;
-    views:number;
-    likeCount:number;
-    isLiked?:boolean;
-    isSubscribed?:boolean;
-    subscriberCount?:number;
-    author:{
-        id:number;
-        nickname:string;
-        profileImage?:string;
-    }
+    title: string;
+    description: string;
+    videoPath: string;
+    thumbnailPath: string;
+    views: number;
+    likeCount: number;
+    isLiked?: boolean;
+    isSubscribed?: boolean;
+    subscriberCount?: number;
+    author: {
+        id: number;
+        nickname: string;
+        profileImage?: string;
+    };
 }
-export const fetchVideos = async () => {
-    const response = await api.get<Video[]>("/videos");
+
+interface VideoListResponse {
+    videos: Video[];
+    total: number;
+    page: number;
+    totalPages: number;
+    hasNextPage: boolean;
+}
+
+export const fetchVideos = async (page = 1, limit = 24) => {
+    const response = await api.get<Video[]>(`/videos?page=${page}&limit=${limit}`);
     return response.data;
-}
+};
 
-export const fetchVideo = async (videoId:number) => {
-    const response = await  api.get<Video>(`/videos/${videoId}`);
+export const fetchVideo = async (videoId: number) => {
+    const response = await api.get<Video>(`/videos/${videoId}`);
     return response.data;
-}
+};
 
-export const toggleVideoLike = async (videoId:number) => {
-    const response = await api.post<{isLiked:boolean}>(`/videos/${videoId}/like`);
+export const toggleVideoLike = async (videoId: number) => {
+    const response = await api.post<{ isLiked: boolean }>(`/videos/${videoId}/like`);
     return response.data;
-}
+};
