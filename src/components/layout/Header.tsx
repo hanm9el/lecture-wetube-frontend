@@ -15,17 +15,19 @@ import {
     MdVideoCall,
 } from "react-icons/md";
 import { FaRegUserCircle, FaYoutube } from "react-icons/fa";
-import { useThemeStore } from "../store/useThemeStore.ts";
-import { useModalStore } from "../store/useModalStore.ts";
-import { useAuthStore } from "../store/useAuthStore.ts";
-import Backdrop from "./ui/Backdrop.tsx";
-import Avatar from "./ui/Avatar.tsx";
+import { useThemeStore } from "../../store/useThemeStore.ts";
+import { useModalStore } from "../../store/useModalStore.ts";
+import { useAuthStore } from "../../store/useAuthStore.ts";
+import Backdrop from "../ui/Backdrop.tsx";
+import Avatar from "../ui/Avatar.tsx";
+import { useLayoutStore } from "../../store/useLayoutStore.tsx";
 
 function Header() {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useThemeStore();
     const { openModal } = useModalStore();
     const { user, isLoggedIn, logout } = useAuthStore();
+    const { toggleSidebar } = useLayoutStore();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -65,7 +67,9 @@ function Header() {
                 )}
             >
                 <div className={twMerge(["flex", "items-center", "gap-4"])}>
-                    <button className={twMerge(["p-2", "rounded-full", "hover:bg-text-default/10"])}>
+                    <button
+                        onClick={toggleSidebar}
+                        className={twMerge(["p-2", "rounded-full", "hover:bg-text-default/10"])}>
                         <MdMenu className={twMerge(["w-6", "h-6"])} />
                     </button>
                     <Link to={"/"} className={twMerge(["flex", "items-center", "gap-2"])}>
