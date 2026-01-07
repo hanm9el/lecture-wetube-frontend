@@ -57,3 +57,15 @@ export const fetchSubscribedVideos = async () => {
     const response = await api.get<Video[]>(`videos/subscribed`);
     return response.data;
 }
+
+// 시청 기록 영상들을 가져오는 API
+export const fetchHistoryVideos = async () => {
+    const response = await api.get<Video[]>("/videos/history");
+    return response.data;
+};
+
+// 좋아요 표시한 영상들을 가져오는 API
+export const fetchLikedVideos = async () => {
+    const response = await api.get<Video[]>("/videos/liked");
+    return response.data;
+};
