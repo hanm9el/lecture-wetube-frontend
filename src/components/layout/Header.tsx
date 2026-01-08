@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { Link, useNavigate } from "react-router";
 import {
     MdAccountBox,
+    MdAdminPanelSettings,
     MdCampaign,
     MdDarkMode,
     MdEdit,
@@ -69,12 +70,13 @@ function Header() {
                 <div className={twMerge(["flex", "items-center", "gap-4"])}>
                     <button
                         onClick={toggleSidebar}
-                        className={twMerge(["p-2", "rounded-full", "hover:bg-text-default/10"])}>
+                        className={twMerge(["p-2", "rounded-full", "hover:bg-text-default/10"])}
+                    >
                         <MdMenu className={twMerge(["w-6", "h-6"])} />
                     </button>
                     <Link to={"/"} className={twMerge(["flex", "items-center", "gap-2"])}>
                         <FaYoutube className={twMerge(["w-8", "h-8", "text-primary-main"])} />
-                        <span className={twMerge(["text-xl", "font-bold"])}>WeTube</span>
+                        <span className={twMerge(["text-xl", "font-bold"])}>HyunTube</span>
                     </Link>
                 </div>
                 <div className={twMerge(["flex-1", "max-w-[600px]"], ["hidden", "md:flex", "items-center"])}>
@@ -216,6 +218,27 @@ function Header() {
                                             </Link>
                                         </div>
                                         <div className={twMerge(["border-t", "border-divider", "my-1"])} />
+
+                                        {user.role === "ADMIN" && (
+                                            <Link
+                                                to={"/admin"}
+                                                onClick={() => setIsMenuOpen(false)}
+                                                className={twMerge(
+                                                    [
+                                                        "w-full",
+                                                        "flex",
+                                                        "items-center",
+                                                        "gap-3",
+                                                        "px-4",
+                                                        "py-2",
+                                                    ],
+                                                    ["text-info-main", "text-sm", "hover:bg-error-main/5"],
+                                                )}
+                                            >
+                                                <MdAdminPanelSettings className={twMerge(["w-6", "h-6"])} />
+                                                관리자 페이지
+                                            </Link>
+                                        )}
                                         <button
                                             onClick={handleLogout}
                                             className={twMerge(

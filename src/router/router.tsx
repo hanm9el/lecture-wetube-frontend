@@ -19,6 +19,8 @@ import Subscriptions from "../pages/channels/Subscriptions.tsx";
 import History from "../pages/videos/History.tsx";
 import LikedVideos from "../pages/playlist/LikedVideos.tsx";
 import ChannelDetail from "../pages/channels/ChannelDetail.tsx";
+import AdminLayout from "../layouts/AdminLayout.tsx";
+import AdminDashboard from "../layouts/AdminDashboard.tsx";
 
 
 const router = createBrowserRouter([
@@ -73,6 +75,13 @@ const router = createBrowserRouter([
             },
         ],
     },
+    {
+        path : "/admin",
+        element: <AdminLayout />,
+        children : [
+            {index: true, element: <AdminDashboard />}
+        ]
+    }
 ]);
 
 export default router;

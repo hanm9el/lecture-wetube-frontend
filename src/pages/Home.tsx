@@ -32,7 +32,7 @@ function Home() {
                 const newVideos = result.videos.filter((newV) => !prev.some((prevV) => prevV.id === newV.id));
                 return [...prev, ...newVideos];
             });
-            setVideos(result.videos);
+            setHasNextPage(result.hasNextPage);
         } catch (e) {
             console.log(e);
         } finally {
