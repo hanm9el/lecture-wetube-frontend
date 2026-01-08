@@ -18,6 +18,8 @@ import SearchResults from "../pages/results/SearchResults.tsx";
 import Subscriptions from "../pages/channels/Subscriptions.tsx";
 import History from "../pages/videos/History.tsx";
 import LikedVideos from "../pages/playlist/LikedVideos.tsx";
+import ChannelDetail from "../pages/channels/ChannelDetail.tsx";
+
 
 const router = createBrowserRouter([
     {
@@ -60,7 +62,8 @@ const router = createBrowserRouter([
             },
             { path: "results", element: <SearchResults /> },
             { path: "channels", children: [
-                    { path: "subscriptions", element: <Subscriptions />}
+                    { path: "subscriptions", element: <Subscriptions />},
+                    { path: ":id", element: <ChannelDetail />}
                 ]},
             {
                 path: "playlist",

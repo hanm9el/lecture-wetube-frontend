@@ -194,7 +194,7 @@ function Header() {
                                                 프로필 수정
                                             </Link>
                                             <Link
-                                                to={`/channel/${user.id}`}
+                                                to={`/channels/${user.id}`}
                                                 onClick={() => setIsMenuOpen(false)}
                                                 className={twMerge(
                                                     ["flex", "items-center", "gap-3", "px-4", "py-2"],
