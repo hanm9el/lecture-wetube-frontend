@@ -6,6 +6,7 @@ import Input from "../../components/ui/Input.tsx";
 import { useNavigate } from "react-router";
 import { api } from "../../api/axios.ts";
 import type { AxiosError } from "axios";
+import Button from "../../components/ui/Button.tsx";
 
 interface UploadFormData {
     title: string;
@@ -299,9 +300,9 @@ function VideoUpload() {
                             </div>
                         </div>
                         <div className={twMerge(["flex", "justify-end", "gap-2"])}>
-                            <button type={"button"} variant={"ghost"} onClick={() => navigate}>
+                            <Button type={"button"} variant={"ghost"} onClick={() => navigate}>
                                 취소
-                            </button>
+                            </Button>
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
