@@ -90,7 +90,7 @@ function Home() {
             <div
                 className={twMerge(
                     ["flex", "flex-col", "justify-center", "items-center"],
-                    ["h-[500vh]", "text-text-disabled"],
+                    ["h-[50vh]", "text-text-disabled"],
                 )}
             >
                 <p className={"text-lg"}>등록된 영상이 없습니다.</p>

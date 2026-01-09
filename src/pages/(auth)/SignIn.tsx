@@ -79,7 +79,7 @@ function SignIn() {
                         로그인
                     </h1>
                     <p className={twMerge(["text-sm", "text-text-disabled"])}>
-                        WeTube 계정으로 이동
+                        HyunTube 계정으로 이동
                     </p>
                 </div>
 
